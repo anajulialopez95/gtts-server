@@ -8,7 +8,7 @@ app = Flask(__name__)
 def generate_audio():
     data = request.get_json()
     text = data.get('text', '')
-    lang = data.get('lang', 'es')  # Español por defecto
+    lang = data.get('lang', 'es')
 
     if not text:
         return "Missing text", 400
@@ -20,4 +20,5 @@ def generate_audio():
     return send_file(filename, mimetype="audio/mpeg")
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=10000)
+    port = int(os.environ.get('PORT', 10000))  # Lee el puerto dinámico de Render
+    app.run(host='0.0.0.0', port=port)
